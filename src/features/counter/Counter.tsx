@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { decrement, increment, incrementByAmount, incrementAsync, selectCount } from './counterSlice';
+import { decrement, increment, incrementByAmount, incrementAsync, selectCount, selectError, someCustomAsyncThunk } from './counterSlice';
 import styles from './Counter.module.css';
 
 export function Counter() {
     const count = useSelector(selectCount);
+    const asyncError = useSelector(selectError);
     const dispatch = useDispatch();
     const [incrementAmount, setIncrementAmount] = useState('2');
+    const totalIncrement = Number(incrementAmount) || 0;
 
     return (
         <div>
@@ -28,17 +30,26 @@ export function Counter() {
                 />
                 <button
                     className={styles.button}
-                    onClick={() => dispatch(incrementByAmount(Number(incrementAmount) || 0))}
+                    onClick={() => dispatch(incrementByAmount(totalIncrement))}
                 >
                     Add Amount
                 </button>
                 <button
                     className={styles.asyncButton}
-                    onClick={() => dispatch(incrementAsync(Number(incrementAmount) || 0))}
+                    onClick={() => dispatch(incrementAsync(totalIncrement))}
                 >
                     Add Async
                 </button>
+                <button
+                    className={styles.asyncButton}
+                    onClick={() => dispatch(someCustomAsyncThunk(totalIncrement))}
+                >
+                    Add Async With call
+                </button>
             </div>
+            {asyncError && (
+                'Async Encrement fails!'
+            )}
         </div>
     );
 }
