@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { decrement, increment, incrementByAmount, incrementAsync, selectCount, selectError, someCustomAsyncThunk } from './counterSlice';
+import {
+    decrement,
+    increment,
+    incrementByAmount,
+    incrementAsync,
+    selectCount,
+    selectError,
+    someCustomAsyncThunk,
+} from './counterSlice';
 import styles from './Counter.module.css';
 
 export function Counter() {
@@ -47,9 +55,7 @@ export function Counter() {
                     Add Async With call
                 </button>
             </div>
-            {asyncError && (
-                'Async Encrement fails!'
-            )}
+            {asyncError && 'Async Encrement fails!'}
         </div>
     );
 }
