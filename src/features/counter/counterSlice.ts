@@ -11,6 +11,7 @@ const initialState: CounterState = {
     error: false,
 };
 
+// Fetch example
 export const someCustomAsyncThunk = createAsyncThunk(
     'counter/customFetch',
     async (originalNumber: number) => {
@@ -24,6 +25,22 @@ export const someCustomAsyncThunk = createAsyncThunk(
     }
 );
 
+// Promise example
+const delayAdd = (originalNumber: number) =>
+    new Promise((resolve) => {
+        setTimeout(function () {
+            resolve(`'Success!' -> ${originalNumber}`);
+        }, 5);
+    });
+
+export const customAsyncThunk2 = createAsyncThunk(
+    'counter/customFetch2',
+    async (originalNumber: number) => {
+        const result = await delayAdd(originalNumber);
+
+        return result;
+    }
+);
 
 export const counterSlice = createSlice({
     name: 'counter',
@@ -57,6 +74,9 @@ export const counterSlice = createSlice({
         },
         [someCustomAsyncThunk.rejected.type]: (state, action) => {
             // console.log('rejected: action.payload :>> ', action.payload);
+        },
+        [customAsyncThunk2.fulfilled.type]: (state, action) => {
+            console.log('resolved: action.payload :>> ', action.payload);
         }
     }
 });

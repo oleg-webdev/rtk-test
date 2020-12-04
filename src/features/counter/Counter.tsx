@@ -8,6 +8,7 @@ import {
     selectCount,
     selectError,
     someCustomAsyncThunk,
+    customAsyncThunk2,
 } from './counterSlice';
 import styles from './Counter.module.css';
 
@@ -53,6 +54,12 @@ export function Counter() {
                     onClick={() => dispatch(someCustomAsyncThunk(totalIncrement))}
                 >
                     Add Async With call
+                </button>
+                <button
+                    className={styles.asyncButton}
+                    onClick={() => dispatch(customAsyncThunk2(totalIncrement))}
+                >
+                    Add Async With call customAsyncThunk2
                 </button>
             </div>
             {asyncError && 'Async Encrement fails!'}
