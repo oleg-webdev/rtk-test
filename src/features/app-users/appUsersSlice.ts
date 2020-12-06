@@ -13,12 +13,14 @@ interface UsersState {
     users: User[];
     error: boolean;
     page: number;
+    isLoading: boolean;
 }
 
 const initialState: UsersState = {
     users: [],
     error: false,
     page: 1,
+    isLoading: true,
 };
 
 export const fetchUsersThunk = createAsyncThunk(
@@ -40,7 +42,10 @@ export const usersSlice = createSlice({
     reducers: {
         setPage: (state, action: PayloadAction<number>) => {
             state.page = action.payload;
-        }
+        },
+        setLoading: (state, action: PayloadAction<boolean>) => {
+            state.isLoading = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(fetchUsersThunk.fulfilled, (state, action) => {
@@ -48,11 +53,13 @@ export const usersSlice = createSlice({
                 ...state.users,
                 ...action.payload.users,
             ];
+
+            state.isLoading = false;
         })
     },
 });
 
-export const { setPage } = usersSlice.actions;
+export const { setPage, setLoading } = usersSlice.actions;
 
 const selectUsersState = (state: RootState) => state.users;
 
@@ -63,6 +70,11 @@ export const selectUsers = createSelector(
 export const selectPage = createSelector(
     selectUsersState,
     (usersState) => usersState.page,
+);
+
+export const selectIsLoading = createSelector(
+    selectUsersState,
+    (usersState) => usersState.isLoading,
 );
 
 export default usersSlice.reducer;
