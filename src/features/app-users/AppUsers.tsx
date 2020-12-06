@@ -1,43 +1,20 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-
-const fetchUsers = async (page: number) => {
-    const fetchedData = await fetch(`https://randomuser.me/api/?page=${page}&results=5`);
-
-    return await fetchedData.json();
-};
-
-interface User {
-    cell: string;
-    name: {
-        first: string;
-        last: string;
-    }
-}
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUsersThunk, selectPage, selectUsers, setPage } from './appUsersSlice';
 
 export const AppUsersComponent = () => {
-    const [users, setUsers] = useState<User[]>([]);
-    const [page, setPage] = useState<number>(1);
-    const fetchMoreAction = useRef(() => {});
-
-    fetchMoreAction.current = () => {
-        fetchUsers(page).then((response) => {
-            const { results } = response;
-
-            setUsers([
-                ...users,
-                ...results,
-            ]);
-        });
-    };
+    const users = useSelector(selectUsers);
+    const page = useSelector(selectPage);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        fetchMoreAction.current();
-    }, []);
+        dispatch(fetchUsersThunk(1));
+    }, [dispatch]);
 
     const fetchMore = useCallback(() => {
-        setPage(page + 1);
-        fetchMoreAction.current();
-    }, [page]);
+        dispatch(setPage(page + 1));
+        dispatch(fetchUsersThunk(page));
+    }, [dispatch, page]);
 
     return (
         <div>
@@ -47,7 +24,7 @@ export const AppUsersComponent = () => {
                 return <p key={cell}>{`${first} - ${last}`}</p>;
             })}
 
-            <button onClick={fetchMore}>fetchMore</button>
+            <button onClick={fetchMore}>fetchMore  page - {page}</button>
         </div>
     )
 };

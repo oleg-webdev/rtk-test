@@ -6,6 +6,7 @@ import {
     getDefaultMiddleware,
 } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
+import usersReducer from '../features/app-users/appUsersSlice';
 
 const loggerMiddleware: Middleware = (storeAPI) => (next) => (action) => {
     // console.log('dispatching', action);
@@ -17,6 +18,7 @@ const loggerMiddleware: Middleware = (storeAPI) => (next) => (action) => {
 
 const reducer = {
     counter: counterReducer,
+    users: usersReducer,
 };
 const middleware = [...getDefaultMiddleware(), loggerMiddleware];
 
