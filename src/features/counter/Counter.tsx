@@ -22,7 +22,11 @@ export function Counter() {
     return (
         <div>
             <div className={styles.row}>
-                <button className={styles.button} aria-label="Increment value" onClick={() => dispatch(increment())}>
+                <button
+                    className={styles.button}
+                    aria-label="Increment value"
+                    onClick={() => dispatch(increment())}
+                >
                     +
                 </button>
                 <span className={styles.value}>{count}</span>
