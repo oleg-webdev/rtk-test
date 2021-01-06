@@ -37,28 +37,16 @@ export function Counter() {
                     value={incrementAmount}
                     onChange={(e) => setIncrementAmount(e.target.value)}
                 />
-                <button
-                    className={styles.button}
-                    onClick={() => dispatch(incrementByAmount(totalIncrement))}
-                >
+                <button className={styles.button} onClick={() => dispatch(incrementByAmount(totalIncrement))}>
                     Add Amount
                 </button>
-                <button
-                    className={styles.asyncButton}
-                    onClick={() => dispatch(incrementAsync(totalIncrement))}
-                >
+                <button className={styles.asyncButton} onClick={() => dispatch(incrementAsync(totalIncrement))}>
                     Add Async
                 </button>
-                <button
-                    className={styles.asyncButton}
-                    onClick={() => dispatch(someCustomAsyncThunk(totalIncrement))}
-                >
+                <button className={styles.asyncButton} onClick={() => dispatch(someCustomAsyncThunk(totalIncrement))}>
                     Add Async With call
                 </button>
-                <button
-                    className={styles.asyncButton}
-                    onClick={() => dispatch(customAsyncThunk2(totalIncrement))}
-                >
+                <button className={styles.asyncButton} onClick={() => dispatch(customAsyncThunk2(totalIncrement))}>
                     Add Async With call customAsyncThunk2
                 </button>
             </div>
